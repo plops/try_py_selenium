@@ -4,9 +4,10 @@ from selenium import webdriver
 import pathlib
 
 import selenium.webdriver
+import selenium.webdriver.support.ui
 
 
-#prof = selenium.webdriver.FirefoxProfile()
+# prof = selenium.webdriver.FirefoxProfile()
 opt = selenium.webdriver.FirefoxOptions()
 
 
@@ -15,6 +16,26 @@ opt.set_preference("permissions.default.image", 2)
 driver = selenium.webdriver.Firefox(firefox_options=opt)
 
 driver.get('https://reddit.com')
+
+
+def scroll_click(xpath):
+    element = driver.find_element_by_xpath(xpath)
+    driver.execute_script("return arguments[0].scrollIntoView();", element)
+    time.sleep(1)
+    element.click()
+    return element
+
+
+def combo_select(xpath: str, value: str):
+    select_element = Select(driver.find_element_by_xpath(xpath))  # tag name
+    for option in select_element.options:
+        if option.get_attribute('value') == value:
+            select_element.select_by_visible_text(option.text)
+
+# close browser:
+# driver.quit()
+
+
 driver.get('https://www.google.com')
 inp = driver.find_element_by_xpath('//input[@id="lst-ib"]')
 inp.clear()
