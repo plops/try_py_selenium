@@ -6,6 +6,10 @@ import pathlib
 import selenium.webdriver
 import selenium.webdriver.support.ui
 
+import selenium.webdriver.support.wait
+from selenium.webdriver.support import expected_conditions as EC
+
+import time
 
 # prof = selenium.webdriver.FirefoxProfile()
 opt = selenium.webdriver.FirefoxOptions()
@@ -14,7 +18,7 @@ opt = selenium.webdriver.FirefoxOptions()
 opt.set_preference("permissions.default.image", 2)
 
 driver = selenium.webdriver.Firefox(firefox_options=opt)
-
+driver_wait = selenium.webdriver.support.wait.WebDriverWait(driver, 30)
 driver.get('https://reddit.com')
 
 
@@ -32,14 +36,54 @@ def combo_select(xpath: str, value: str):
         if option.get_attribute('value') == value:
             select_element.select_by_visible_text(option.text)
 
+
 # close browser:
 # driver.quit()
 
+def wait(xpath):
+    driver_wait.until(EC.element_to_be_clickable(
+        (selenium.webdriver.common.by.By.XPATH, xpath)))
 
-driver.get('https://www.google.com')
-inp = driver.find_element_by_xpath('//input[@id="lst-ib"]')
-inp.clear()
-inp.send_keys(u'emacs python\n')
+
+def wait_click(xpath):
+    # time.sleep(.1)
+    wait(xpath)
+    el = driver.find_element_by_xpath(xpath)
+    el.click()
+    return el
+
+
+def google(term):
+    driver.get('https://www.google.com/ncr')
+    inp = driver.find_element_by_xpath('//input[@id="lst-ib"]')
+    inp.clear()
+    inp.send_keys(term)
+    inp.send_keys(u'\n')
+    wait_click('//a[@id="hdtb-tls"]')  # Tools
+    wait_click('//div[@aria-label="Any time"]')
+    wait_click('//li[@id="qdr_d"]')
+    if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
+        wait_click('//div[@aria-label="Past 24 hours"]')
+        wait_click('//li[@id="qdr_w"]')
+    if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
+        wait_click('//div[@aria-label="Past week"]')
+        wait_click('//li[@id="qdr_m"]')
+    if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
+        wait_click('//div[@aria-label="Past month"]')
+        wait_click('//li[@id="qdr_y"]')
+
+
+google('site:adacore.com')
+google('site:nvidia.com')
+google_week_search('site:intel.com')
+google_week_search('site:altera.com')
+google_week_search('site:xilinx.com')
+google_week_search('site:analog.com')
+google_week_search('site:ti.com')
+google_week_search('site:color-chip.com')
+google_week_search('site:innoviz.tech')
+google('site:walabot.com')
+
 
 url = driver.find_element_by_xpath('//cite[@class="iUh30"]')
 
