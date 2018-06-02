@@ -73,13 +73,24 @@ def google(term):
         wait_click('//li[@id="qdr_y"]')
     if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
         driver.get('https://www.google.com/search?q=' + term +
-                   '&tbs=cdr%3A1%2Ccd_min%3A2000%2Ccd_max%3A2018')
+                   '&tbs=cdr:1,cd_min:2000,cd_max:2018,sbd:1')
 
 
 # https://github.com/azzamsa/awesome-lisp-companies
 # https://github.com/azzamsa/awesome-cl-software
-name = 'site:' + 'latticesemi.com'
-driver.get('https://www.bing.com/search?q=' + name)
+
+def bing(term):
+    name = 'site:' + term
+    for i in ['1', '2', '3', '5_0_24000']:
+        driver.get('https://www.bing.com/search?q=' +
+                   name + '&filters=ex1:"ez' + i + '"')
+        try:
+            el = driver.find_element_by_xpath('//li[@class="b_no"]')
+        except selenium.common.exceptions.NoSuchElementException:
+            return el
+
+
+bing(url[-1])
 
 inp = driver.find_element_by_xpath('//input[@id="lst-ib"]')
 inp.clear()
@@ -136,6 +147,7 @@ url = ['ampleon.com', 'cavendish-kinetics.com',
 
 
 google('site:' + url[-1])
+google('site:ti.com')
 
 url = driver.find_element_by_xpath('//cite[@class="iUh30"]')
 
