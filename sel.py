@@ -19,7 +19,7 @@ opt.set_preference("permissions.default.image", 2)
 
 driver = selenium.webdriver.Firefox(firefox_options=opt)
 driver_wait = selenium.webdriver.support.wait.WebDriverWait(driver, 30)
-driver.get('https://reddit.com')
+# driver.get('https://reddit.com')
 
 
 def scroll_click(xpath):
@@ -71,19 +71,71 @@ def google(term):
     if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
         wait_click('//div[@aria-label="Past month"]')
         wait_click('//li[@id="qdr_y"]')
+    if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
+        driver.get('https://www.google.com/search?q=' + term +
+                   '&tbs=cdr%3A1%2Ccd_min%3A2000%2Ccd_max%3A2018')
 
 
-google('site:adacore.com')
-google('site:nvidia.com')
-google_week_search('site:intel.com')
-google_week_search('site:altera.com')
-google_week_search('site:xilinx.com')
-google_week_search('site:analog.com')
-google_week_search('site:ti.com')
-google_week_search('site:color-chip.com')
-google_week_search('site:innoviz.tech')
-google('site:walabot.com')
+# https://github.com/azzamsa/awesome-lisp-companies
+# https://github.com/azzamsa/awesome-cl-software
+name = 'site:' + 'latticesemi.com'
+driver.get('https://www.bing.com/search?q=' + name)
 
+inp = driver.find_element_by_xpath('//input[@id="lst-ib"]')
+inp.clear()
+inp.send_keys(term)
+inp.send_keys(u'\n')
+wait_click('//a[@id="hdtb-tls"]')  # Tools
+wait_click('//div[@aria-label="Any time"]')
+wait_click('//li[@id="qdr_d"]')
+if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
+    wait_click('//div[@aria-label="Past 24 hours"]')
+    wait_click('//li[@id="qdr_w"]')
+if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
+    wait_click('//div[@aria-label="Past week"]')
+    wait_click('//li[@id="qdr_m"]')
+if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
+    wait_click('//div[@aria-label="Past month"]')
+    wait_click('//li[@id="qdr_y"]')
+
+
+url = ['ampleon.com', 'cavendish-kinetics.com',
+       'dialog-semiconductor.com',
+       'nxp.com',
+       'clifford.at',
+       'sotun.de',
+       'adacore.com',
+       'nvidia.com',
+       'intel.com',
+       'altera.com',
+       'xilinx.com',
+       'analog.com',
+       'ti.com',
+       'color-chip.com',
+       'innoviz.tech',
+       'walabot.com',
+       'omniradar.com',
+       'vayyar.com',
+       'office-s.nl',
+       'zeiss.com',
+       'ezono.com',
+       'tass.plm.automation.siemens.com',
+       'madspace.nl',
+       'kraut.space',
+       'lineageos.org',
+       'oneplus.com',
+       'gpd.hk',
+       'hansdegoede.livejournal.com',
+       'norvig.com',
+       'snellman.net',
+       'lisp.org',
+       'pvk.ca',
+       'kvardek-du.kerno.org',
+       'latticesemi.com',
+       'random-state.net']
+
+
+google('site:' + url[-1])
 
 url = driver.find_element_by_xpath('//cite[@class="iUh30"]')
 
