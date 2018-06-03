@@ -90,26 +90,6 @@ def bing(term):
             return el
 
 
-bing(url[-1])
-
-inp = driver.find_element_by_xpath('//input[@id="lst-ib"]')
-inp.clear()
-inp.send_keys(term)
-inp.send_keys(u'\n')
-wait_click('//a[@id="hdtb-tls"]')  # Tools
-wait_click('//div[@aria-label="Any time"]')
-wait_click('//li[@id="qdr_d"]')
-if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
-    wait_click('//div[@aria-label="Past 24 hours"]')
-    wait_click('//li[@id="qdr_w"]')
-if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
-    wait_click('//div[@aria-label="Past week"]')
-    wait_click('//li[@id="qdr_m"]')
-if '' != driver.find_element_by_xpath('//div[@id="topstuff"]').text:
-    wait_click('//div[@aria-label="Past month"]')
-    wait_click('//li[@id="qdr_y"]')
-
-
 url = ['ampleon.com', 'cavendish-kinetics.com',
        'dialog-semiconductor.com',
        'nxp.com',
@@ -143,11 +123,44 @@ url = ['ampleon.com', 'cavendish-kinetics.com',
        'pvk.ca',
        'kvardek-du.kerno.org',
        'latticesemi.com',
-       'random-state.net']
+       'random-state.net',
+       'opengl.org',
+       'leibniz-ipht.de',
+       'aip.de',
+       'dlr.de',
+       'esa.int',
+       'eurocontrol.int',
+       'acolyer.org',
+       'eetimes.com',
+       'verasonics.com',
+       'sec.gov',
+       'hightechcampus.com',
+       'ibeo-as.com',
+       'smartphotonics.nl',
+       'brightphotonics.eu',
+       'nazca-design.org',
+       'jdj.mit.edu',
+       'cyc.com',
+       'franz.com',
+       'lispworks.com',
+       'sbcl.org',
+       'weitz.de',
+       'crunchbase.com',
+       'image-sensors-world.blogspot.com',
+       'reddit.com',
+       'digg.com',
+       'nLIGHT.net',
+       'sensetime.com',
+       'www.compass-eos.com',
+       'exaware.com',
+       'mellanox.com',
+       'optoscribe.com',
+       'aeponyx.com']
 
-
+bing(url[-1])
 google('site:' + url[-1])
-google('site:ti.com')
+google('site:digg.com')
+
 
 url = driver.find_element_by_xpath('//cite[@class="iUh30"]')
 
