@@ -155,9 +155,37 @@ url = ['ampleon.com', 'cavendish-kinetics.com',
        'exaware.com',
        'mellanox.com',
        'optoscribe.com',
-       'aeponyx.com']
+       'aeponyx.com',
+       'hacklang.org']
 
-bing(url[-1])
+crunchbase = ['crunchbase.com',
+              'owler.com',
+              'seedtable.com',
+              'startupdatatrends.com',
+              'startupgenome.com',
+              'seed-db.com',
+              'yclist.com',
+              'cbinsights.com',
+              'radar.tech.eu',
+              'app.startupeuropeclub.eu',
+              'angle.co',
+              'mappedinisrael.com',
+              'techbritain.com',
+              'techlist.asia',
+              'etohum.com',
+              'foundedinholland.com',
+              'startups.be',
+              'germanystartupmap.com',
+              'german-startup.de',
+              'dutchstartupmap.com',
+              'startupnorway.com', 'swissstartups.org']
+
+bing(url[-23])
+
+[e.get_attribute('href')
+ for e in driver.find_elements_by_xpath('//ol/li/h2/a')]
+
+bing(crunchbase[3] + ' photonics')
 google('site:' + url[-1])
 google('site:digg.com')
 
