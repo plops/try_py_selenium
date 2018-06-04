@@ -226,13 +226,13 @@ def marktplaats(term):
 
 if __name__ == "__main__":
     arguments = docopt(__doc__)
-    if arguments['-b']:
-        try:
+    try:
+        if arguments['-b']:
             for x in bing('site:' + arguments['SITE']):
                 print(x)
-        except TypeError:
-            print('no results', file=sys.stderr)
-    if arguments['-g']:
-        for x in google('site:' + arguments['SITE']):
-            print(x)
+        if arguments['-g']:
+            for x in google('site:' + arguments['SITE']):
+                print(x)
+    except TypeError:
+        print('no results', file=sys.stderr)
     driver.quit()
